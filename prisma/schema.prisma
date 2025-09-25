@@ -22,3 +22,12 @@ model Guides {
   is_premium Boolean @default(false)
   createdAt DateTime @default(now())
 }
+
+model Guide {
+  id        Int      @id @default(autoincrement())
+  title     String
+  slug      String   @unique
+  content   String
+  is_premium Boolean @default(false)
+  createdAt DateTime @default(now())
+}
