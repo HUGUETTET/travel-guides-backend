@@ -31,3 +31,29 @@ app.get('/api/guides', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// UPDATE guide by id
+app.put('/api/guides/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title } = req.body;
+    const updated = await prisma.guide.update({
+      where: { id: parseInt(id) },
+      data: { title },
+    });
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// DELETE guide by id
+app.delete('/api/guides/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await prisma.guide.delete({ where: { id: parseInt(id) } });
+    res.json({ message: "Guide deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
