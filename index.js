@@ -21,3 +21,13 @@ app.post('/api/guides', async (req, res) => {
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Backend listening on ${port}`));
+
+app.get('/api/guides', async (req, res) => {
+  try {
+    const guides = await prisma.guide.findMany();
+    res.json(guides);
+  } catch (err) {
+    console.error("❌ Error in GET /api/guides:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
